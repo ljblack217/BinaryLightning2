@@ -24,7 +24,10 @@ class flipFlop {
   void drawFlipFlop(int bit, float outBitX, float outBitY) {
     //in1 to and1 and and2
     textSize(12);
+    //drawFlipFlopGlow(bit, outBitX, outBitY);
+
     stroke(255);
+    strokeWeight(1.5);
     noFill();
     if (adders[bit].gXor2.out1 == true) {
       line(adders[bit].gXor2.x, adders[bit].gXor2.y, gAnd2.x - (gAnd4.x - gAnd2.x)/2, (gAnd2.y - gAnd1.y)/2 + gAnd1.y);
@@ -40,13 +43,7 @@ class flipFlop {
         gAnd2.x, gAnd2.y);
     }
 
-    //clk to and 1 and and2
-    //if (clock) {
-    //  line(clockX, clockY, gAnd1.x, gAnd1.y);
-    //  line(clockX, clockY, gAnd2.x, gAnd2.y);
-    //}
 
-    //and1 to and3
     if (textOn) text("fAnd1 "+bit, gAnd1.x, gAnd1.y);
     if (gAnd1.out1 == true) {
       line(gAnd1.x, gAnd1.y, gAnd3.x, gAnd3.y);
@@ -73,25 +70,25 @@ class flipFlop {
       line(gAnd3.x, gAnd3.y, outBitX, outBitY);
 
       if (flipFlops[bit].out == true) {
-        stroke(0, shadowLvl);
+        //stroke(0, shadowLvl);
 
-        for (float i = 1.5; i<shadowSize; i++) {
-          strokeWeight(i);
-          bezier(gAnd3.x, gAnd3.y, 
-            gAnd3.x+100, gAnd3.y-20, 
-            adders[bit].gXor1.x, flipFlops[bit].gAnd3.y-20, 
-            adders[bit].gXor1.x, flipFlops[bit].gAnd3.y-20);
+        //for (float i = 1.5; i<shadowSize; i++) {
+        //  strokeWeight(i);
+        //  bezier(gAnd3.x, gAnd3.y, 
+        //    gAnd3.x+100, gAnd3.y-20, 
+        //    adders[bit].gXor1.x, flipFlops[bit].gAnd3.y-20, 
+        //    adders[bit].gXor1.x, flipFlops[bit].gAnd3.y-20);
 
-          bezier(adders[bit].gXor1.x, gAnd3.y-20, 
-            adders[bit].gXor1.x, gAnd3.y-20, 
-            adders[bit].gXor1.x-50, adders[bit].gXor1.y-10, 
-            adders[bit].gXor1.x, adders[bit].gXor1.y);
+        //  bezier(adders[bit].gXor1.x, gAnd3.y-20, 
+        //    adders[bit].gXor1.x, gAnd3.y-20, 
+        //    adders[bit].gXor1.x-50, adders[bit].gXor1.y-10, 
+        //    adders[bit].gXor1.x, adders[bit].gXor1.y);
 
-          bezier(adders[bit].gXor1.x, gAnd3.y-20, 
-            adders[bit].gXor1.x, gAnd3.y-20, 
-            adders[bit].gXor1.x-100, adders[bit].gXor1.y-15, 
-            gAnd1.x, gAnd1.y);
-        }
+        //  bezier(adders[bit].gXor1.x, gAnd3.y-20, 
+        //    adders[bit].gXor1.x, gAnd3.y-20, 
+        //    adders[bit].gXor1.x-100, adders[bit].gXor1.y-15, 
+        //    gAnd1.x, gAnd1.y);
+        //}
 
         strokeWeight(1.5);
         stroke(255);
@@ -124,6 +121,109 @@ class flipFlop {
         gAnd4.x+50, gAnd4.y+10, 
         gAnd2.x-50, gAnd2.y+10, 
         gAnd2.x, gAnd2.y);
+    }
+  }
+  void drawFlipFlopGlow(int bit, float outBitX, float outBitY) {
+    //in1 to and1 and and2
+    textSize(12);
+
+    strokeWeight(1.5);
+    noFill();
+    stroke(97, 255, 252, 10);
+    for (float i = 2; i<8; i = i + 2) {
+      strokeWeight(i);
+      if (adders[bit].gXor2.out1 == true) {
+        line(adders[bit].gXor2.x, adders[bit].gXor2.y, gAnd2.x - (gAnd4.x - gAnd2.x)/2, (gAnd2.y - gAnd1.y)/2 + gAnd1.y);
+        //line(adders[bit].gXor2.x, adders[bit].gXor2.y, gAnd1.x, gAnd1.y);
+        bezier(gAnd2.x - (gAnd4.x - gAnd2.x)/2, (gAnd2.y - gAnd1.y)/2 + gAnd1.y, 
+          gAnd2.x, (gAnd2.y - gAnd1.y)/2 + gAnd1.y, 
+          gAnd2.x - (gAnd4.x - gAnd2.x)/2, gAnd1.y, 
+          gAnd1.x, gAnd1.y);
+        //line(adders[bit].gXor2.x, adders[bit].gXor2.y, gAnd2.x, gAnd2.y);
+        bezier(gAnd2.x - (gAnd4.x - gAnd2.x)/2, (gAnd2.y - gAnd1.y)/2 + gAnd1.y, 
+          gAnd2.x, (gAnd2.y - gAnd1.y)/2 + gAnd1.y, 
+          gAnd2.x - (gAnd4.x - gAnd2.x)/2, gAnd2.y, 
+          gAnd2.x, gAnd2.y);
+      }
+
+
+      if (textOn) text("fAnd1 "+bit, gAnd1.x, gAnd1.y);
+      if (gAnd1.out1 == true) {
+        line(gAnd1.x, gAnd1.y, gAnd3.x, gAnd3.y);
+      }
+      //and2 to and4
+      if (textOn) text("fAnd2 " +bit, gAnd2.x, gAnd2.y);
+      if (gAnd2.out1 == true) {
+        line(gAnd2.x, gAnd2.y, gAnd4.x, gAnd4.y);
+      }
+      //and3 to out and or2 and and1 and adder.xor 1 and Out
+      if (textOn) text("fand3 "+bit, gAnd3.x, gAnd3.y);
+      if (gAnd3.out1 == true) {
+        //line(gAnd3.x, gAnd3.y, gAnd4.x, gAnd4.y);
+        bezier(gAnd3.x, gAnd3.y, 
+          gAnd3.x+40, gAnd3.y+10, 
+          gAnd4.x-40, gAnd4.y-10, 
+          gAnd4.x, gAnd4.y);
+
+        //line(gAnd3.x, gAnd3.y, gAnd1.x, gAnd1.y);
+        bezier(gAnd3.x, gAnd3.y, 
+          gAnd3.x+50, gAnd3.y-10, 
+          gAnd1.x -50, gAnd1.y-10, 
+          gAnd1.x, gAnd1.y);
+        line(gAnd3.x, gAnd3.y, outBitX, outBitY);
+
+        if (flipFlops[bit].out == true) {
+          
+
+          //for (float i = 1.5; i<shadowSize; i++) {
+          //strokeWeight(i);
+          //bezier(gAnd3.x, gAnd3.y, 
+          //  gAnd3.x+100, gAnd3.y-20, 
+          //  adders[bit].gXor1.x, flipFlops[bit].gAnd3.y-20, 
+          //  adders[bit].gXor1.x, flipFlops[bit].gAnd3.y-20);
+
+          //bezier(adders[bit].gXor1.x, gAnd3.y-20, 
+          //  adders[bit].gXor1.x, gAnd3.y-20, 
+          //  adders[bit].gXor1.x-50, adders[bit].gXor1.y-10, 
+          //  adders[bit].gXor1.x, adders[bit].gXor1.y);
+
+          //bezier(adders[bit].gXor1.x, gAnd3.y-20, 
+          //  adders[bit].gXor1.x, gAnd3.y-20, 
+          //  adders[bit].gXor1.x-100, adders[bit].gXor1.y-15, 
+          //  gAnd1.x, gAnd1.y);
+          ///}
+
+
+          bezier(flipFlops[bit].gAnd3.x, gAnd3.y, 
+            flipFlops[bit].gAnd3.x+100, gAnd3.y-20, 
+            adders[bit].gXor1.x, gAnd3.y-20, 
+            adders[bit].gXor1.x, gAnd3.y-20);
+
+          bezier(adders[bit].gXor1.x, gAnd3.y-20, 
+            adders[bit].gXor1.x, gAnd3.y-20, 
+            adders[bit].gXor1.x-50, adders[bit].gXor1.y-10, 
+            adders[bit].gXor1.x, adders[bit].gXor1.y);
+
+          bezier(adders[bit].gXor1.x, gAnd3.y-20, 
+            adders[bit].gXor1.x, gAnd3.y-20, 
+            adders[bit].gXor1.x-100, adders[bit].gXor1.y-15, 
+            gAnd1.x, gAnd1.y);
+        }
+      }
+      // gAnd4 to and3 and and2
+      if (textOn) text("fand4 "+bit, gAnd4.x, gAnd4.y);
+      if (gAnd4.out1 == true) {
+        //line(gAnd4.x, gAnd4.y, gAnd3.x, gAnd3.y);
+        bezier(gAnd4.x, gAnd4.y, 
+          gAnd4.x+40, gAnd4.y-10, 
+          gAnd3.x-40, gAnd3.y+10, 
+          gAnd3.x, gAnd3.y);
+        //line(gAnd4.x, gAnd4.y, gAnd2.x, gAnd2.y);
+        bezier(gAnd4.x, gAnd4.y, 
+          gAnd4.x+50, gAnd4.y+10, 
+          gAnd2.x-50, gAnd2.y+10, 
+          gAnd2.x, gAnd2.y);
+      }
     }
   }
   void calc(int bit) {

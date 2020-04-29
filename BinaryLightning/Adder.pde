@@ -22,8 +22,12 @@ class adder {
   }
   void drawAdder(float in1X, float in1Y, int bit) {
     textSize(12);
-    stroke(255);
+    
     noFill();
+    
+    
+    stroke(255);
+      strokeWeight(1.5);
     //in 1 to xor1 and and1
     if (textOn)text("in" + (bit+1), in1X, in1Y);
     if (bInNum[bit]== true) {
@@ -105,8 +109,7 @@ class adder {
       //    (gXor2.x - gXor1.x)/3 + gXor1.x, gAnd2.y, 
       //    gAnd2.x, gAnd2.y);
       //}
-      stroke(255);
-      strokeWeight(1.5);
+      
       bezier(adders[bit-1].gOr1.x, adders[bit-1].gOr1.y, 
         ((flipFlops[bit].posX-adders[bit-1].gOr1.x)/5)+adders[bit-1].gOr1.x, adders[bit-1].gOr1.y, 
         (gAnd2.x/3)*2, (gAnd2.y - gXor2.y)/2+gXor2.y, 
@@ -128,7 +131,7 @@ class adder {
     }
 
     if (gXor1.out1 == true) {
-      
+
       stroke(255);
       strokeWeight(1.5);
       line(gXor1.x, gXor1.y, gXor2.x, gXor2.y);
@@ -154,6 +157,84 @@ class adder {
       //curve(gAnd1.x, gAnd1.y, gAnd1.x, gAnd1.y, gOr1.x, gOr1.y, gOr1.x, gOr1.y );
     }
   }
+  void drawAdderGlow(float in1X, float in1Y, int bit) {
+    
+    stroke(97, 255, 252, 10);
+    for (float i = 2; i<8; i = i + 2) {
+      strokeWeight(i);
+      noFill();
+      //in 1 to xor1 and and1
+      if (textOn)text("in" + (bit+1), in1X, in1Y);
+      if (bInNum[bit]== true) {
+        float inbx;
+        float inby;
+        changeSound();
+        inbx = gXor1.x/2;
+        inby = (gXor1.y-in1Y)/2;
+        line(in1X, in1Y, gXor1.x, gXor1.y);
+        beginShape();
+        curveVertex(in1X, in1Y);
+        curveVertex(inbx, in1Y+inby);
+        curveVertex(gAnd1.x, gAnd1.y);
+        curveVertex(gAnd1.x, gAnd1.y);
+        endShape();
+      }
+
+      if (bit>0 && adders[bit-1].gOr1.out1 == true) {
+
+        
+        bezier(adders[bit-1].gOr1.x, adders[bit-1].gOr1.y, 
+          ((flipFlops[bit].posX-adders[bit-1].gOr1.x)/5)+adders[bit-1].gOr1.x, adders[bit-1].gOr1.y, 
+          (gAnd2.x/3)*2, (gAnd2.y - gXor2.y)/2+gXor2.y, 
+          (gXor2.x - gXor1.x)/3 + gXor1.x, (gAnd1.y - gXor2.y)/2+gXor2.y);
+        bezier((gXor2.x - gXor1.x)/3 + gXor1.x, (gAnd1.y - gXor2.y)/2+gXor2.y, 
+          gXor2.x, (gAnd1.y - gXor2.y)/2+gXor2.y, 
+          (gXor2.x-gXor1.x)/2+gXor1.x, gXor2.y, 
+          gXor2.x, gXor2.y);
+        bezier((gXor2.x - gXor1.x)/3 + gXor1.x, (gAnd1.y - gXor2.y)/2+gXor2.y, 
+          gAnd2.x, (gAnd1.y - gXor2.y)/2+gXor2.y, 
+          (gXor2.x - gXor1.x)/3 + gXor1.x, gAnd2.y, 
+          gAnd2.x, gAnd2.y);
+      }
+
+      //xor1 to zor2 and and2
+      if (textOn) {
+        text("xor1" + bit, gXor1.x, gXor1.y);
+        text("xor2" + bit, gXor2.x, gXor2.y);
+      }
+
+      if (gXor1.out1 == true) {
+
+        
+        line(gXor1.x, gXor1.y, gXor2.x, gXor2.y);
+
+        curve(gXor1.x - ((gAnd2.x - gXor1.x)*3), gXor1.y, gXor1.x, gXor1.y, gAnd2.x, gAnd2.y, gAnd2.x + ((gAnd2.x - gXor1.x)/4), gAnd2.y );
+      }
+
+      //and1 to or1
+      if (textOn) {
+        text("and1" + bit, gAnd1.x, gAnd1.y);
+        text("or1" + bit, gOr1.x, gOr1.y);
+      }
+      if (gAnd1.out1 == true) {
+        changeSound();
+        line(gAnd1.x, gAnd1.y, gOr1.x, gOr1.y);
+      }
+      //and2 to or1
+      if (textOn) text("and2" + bit, gAnd2.x, gAnd2.y);
+      if (gAnd2.out1 == true) {
+        changeSound();
+        line(gAnd2.x, gAnd2.y, gOr1.x, gOr1.y);
+      }
+    }
+  }
+
+
+
+
+
+
+
   void calc(int bit, boolean in) {
     //out calcs
     gXor1.calc();
