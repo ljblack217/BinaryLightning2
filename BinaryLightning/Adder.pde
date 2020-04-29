@@ -160,7 +160,7 @@ class adder {
   void drawAdderGlow(float in1X, float in1Y, int bit) {
     
     stroke(97, 255, 252, 10);
-    for (float i = 2; i<8; i = i + 2) {
+    for (float i = 2; i<10; i = i + 4) {
       strokeWeight(i);
       noFill();
       //in 1 to xor1 and and1

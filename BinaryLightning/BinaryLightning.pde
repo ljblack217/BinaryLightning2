@@ -19,6 +19,7 @@ boolean textOn;
 int clockCount = 0;
 boolean bClockCount = false;
 PFont consolas;
+PFont digit;
 float shadowSize = 6;
 float shadowLvl = 20;
 int clearCount = 0;
@@ -30,11 +31,13 @@ Gain g2;
 SamplePlayer[] peaks;
 SamplePlayer bGBuzz;
 
-Server s;
+Server out;
+//Server serIn;
 
 
 void setup() {
   consolas = createFont("Consolas.ttf", 32);
+  digit = createFont("DS-DIGI.TTF", 32);
   textFont(consolas);
   bInNum = new boolean[bitSize];
   bOutNum = new boolean[bitSize];
@@ -57,7 +60,8 @@ void setup() {
     }
   }
   audioSetup();
-  s = new Server(this, 12345);
+  out = new Server(this, 12345);
+  //serIn = new Server(this, 12346);
 }
 
 void draw() {
@@ -80,25 +84,31 @@ void draw() {
   }
 
   drawNumber(50, 20, sInNum);
+  textFont(consolas);
   if (clock) {
     for (int g = 0; g< bitSize; g++) {
       stroke(97, 255, 252, 7);
-      for (int w = 2; w<8; w++) {
+      for (int w = 2; w<10; w = w+4) {
         strokeWeight(w);
         line(clockX, clockY, flipFlops[g].gAnd1.x, flipFlops[g].gAnd1.y);
         line(clockX, clockY, flipFlops[g].gAnd2.x, flipFlops[g].gAnd2.y);
       }
     }
+    for (int c = 0; c<16; c++) {
+      if (clock) {
+
+        stroke(255);
+        strokeWeight(1.5);
+        line(clockX, clockY, flipFlops[c].gAnd1.x, flipFlops[c].gAnd1.y);
+        line(clockX, clockY, flipFlops[c].gAnd2.x, flipFlops[c].gAnd2.y);
+      }
+    }
+    
   }
+
   for (int i = 0; i < bitSize; i++) {
     buzzSwitch(clock);
-    if (clock) {
 
-      stroke(255);
-      strokeWeight(1.5);
-      line(clockX, clockY, flipFlops[i].gAnd1.x, flipFlops[i].gAnd1.y);
-      line(clockX, clockY, flipFlops[i].gAnd2.x, flipFlops[i].gAnd2.y);
-    }
     adders[i].drawAdderGlow(0, height/3 + height/48*i, i);
     flipFlops[i].drawFlipFlopGlow(i, width, height/3 + height/48*i);
     adders[i].drawAdder(0, height/3 + height/48*i, i);
@@ -106,14 +116,15 @@ void draw() {
   }
   //calculations
   for (int i = 0; i < bitSize; i++) {
-    
+
     adders[i].calc(i, bInNum[i]);
     flipFlops[i].calc(i);
     bOutNum[i] = flipFlops[i].gAnd3.out1;
   }
   iOutNum = i16ToNum(bOutNum);
-  drawNumber(width-150, 20, ""+iOutNum);
-  s.write(iOutNum+"\n");
+  //drawNumber(width-150, 20, ""+iOutNum);
+  textFont(consolas);
+  out.write(iOutNum+"\n");
 }
 
 void keyPressed() {
@@ -156,7 +167,7 @@ void keyPressed() {
       clearCount = 100;
     }
   } else if (key == 's') {
-    println(s.ip());
+    println(out.ip());
   }
 }
 //void mouseClicked(){
@@ -210,7 +221,7 @@ void drawNumber(float x, float y, String in) {
   }
   textSize(24);
   fill(255, 0, 0);
-  text(in, x, y);
-}
-void sendOutNum(int num) {
+  textFont(digit);
+  text(in, x, y+20);
+  //serIn.write(in+"\n");
 }

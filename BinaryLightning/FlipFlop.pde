@@ -130,7 +130,7 @@ class flipFlop {
     strokeWeight(1.5);
     noFill();
     stroke(97, 255, 252, 10);
-    for (float i = 2; i<8; i = i + 2) {
+    for (float i = 2; i<10; i = i + 4) {
       strokeWeight(i);
       if (adders[bit].gXor2.out1 == true) {
         line(adders[bit].gXor2.x, adders[bit].gXor2.y, gAnd2.x - (gAnd4.x - gAnd2.x)/2, (gAnd2.y - gAnd1.y)/2 + gAnd1.y);
