@@ -11,13 +11,13 @@ class flipFlop {
     out = false;
     posX = x;
     posY = y;
-    gAnd1 = new and(posX-47, posY-20, true);
+    gAnd1 = new and(posX-width/27, posY-height/36, true);
     gAnd1.out1 = false;
-    gAnd2 = new and(posX-47, posY+20, true);
+    gAnd2 = new and(posX-width/27, posY+height/36, true);
     gAnd2.out1 = false;
-    gAnd3 = new and(posX+62, posY-20, true);
+    gAnd3 = new and(posX+width/21, posY-height/36, true);
     gAnd3.out1 = false;
-    gAnd4 = new and(posX+62, posY+20, true);
+    gAnd4 = new and(posX+width/21, posY+height/36, true);
     gAnd4.out1 = true;
   }
 
@@ -27,17 +27,17 @@ class flipFlop {
     stroke(255);
     noFill();
     if (adders[bit].gXor2.out1 == true) {
-      line(adders[bit].gXor2.x, adders[bit].gXor2.y, gAnd2.x - (gAnd4.x - gAnd2.x)/2 ,(gAnd2.y - gAnd1.y)/2 + gAnd1.y);
+      line(adders[bit].gXor2.x, adders[bit].gXor2.y, gAnd2.x - (gAnd4.x - gAnd2.x)/2, (gAnd2.y - gAnd1.y)/2 + gAnd1.y);
       //line(adders[bit].gXor2.x, adders[bit].gXor2.y, gAnd1.x, gAnd1.y);
-      bezier(gAnd2.x - (gAnd4.x - gAnd2.x)/2 ,(gAnd2.y - gAnd1.y)/2 + gAnd1.y,
-      gAnd2.x,(gAnd2.y - gAnd1.y)/2 + gAnd1.y,
-      gAnd2.x - (gAnd4.x - gAnd2.x)/2 ,gAnd1.y,
-      gAnd1.x,gAnd1.y);
+      bezier(gAnd2.x - (gAnd4.x - gAnd2.x)/2, (gAnd2.y - gAnd1.y)/2 + gAnd1.y, 
+        gAnd2.x, (gAnd2.y - gAnd1.y)/2 + gAnd1.y, 
+        gAnd2.x - (gAnd4.x - gAnd2.x)/2, gAnd1.y, 
+        gAnd1.x, gAnd1.y);
       //line(adders[bit].gXor2.x, adders[bit].gXor2.y, gAnd2.x, gAnd2.y);
-      bezier(gAnd2.x - (gAnd4.x - gAnd2.x)/2 ,(gAnd2.y - gAnd1.y)/2 + gAnd1.y,
-      gAnd2.x,(gAnd2.y - gAnd1.y)/2 + gAnd1.y,
-      gAnd2.x - (gAnd4.x - gAnd2.x)/2 ,gAnd2.y,
-      gAnd2.x, gAnd2.y);
+      bezier(gAnd2.x - (gAnd4.x - gAnd2.x)/2, (gAnd2.y - gAnd1.y)/2 + gAnd1.y, 
+        gAnd2.x, (gAnd2.y - gAnd1.y)/2 + gAnd1.y, 
+        gAnd2.x - (gAnd4.x - gAnd2.x)/2, gAnd2.y, 
+        gAnd2.x, gAnd2.y);
     }
 
     //clk to and 1 and and2
@@ -60,27 +60,45 @@ class flipFlop {
     if (textOn) text("fand3 "+bit, gAnd3.x, gAnd3.y);
     if (gAnd3.out1 == true) {
       //line(gAnd3.x, gAnd3.y, gAnd4.x, gAnd4.y);
-      bezier(gAnd3.x, gAnd3.y,
-      gAnd3.x+40,gAnd3.y+10,
-      gAnd4.x-40, gAnd4.y-10,
-      gAnd4.x, gAnd4.y);
-      
-      //line(gAnd3.x, gAnd3.y, gAnd1.x, gAnd1.y);
-      bezier(gAnd3.x, gAnd3.y,
-      gAnd3.x+50, gAnd3.y-10,
-      gAnd1.x -50 ,gAnd1.y-10,
-      gAnd1.x,gAnd1.y);
-      line(gAnd3.x, gAnd3.y, outBitX, outBitY);
-      
-      if (flipFlops[bit].out == true) {
-      stroke(0, shadowLvl);
+      bezier(gAnd3.x, gAnd3.y, 
+        gAnd3.x+40, gAnd3.y+10, 
+        gAnd4.x-40, gAnd4.y-10, 
+        gAnd4.x, gAnd4.y);
 
-      for (float i = 1.5; i<shadowSize; i++) {
-        strokeWeight(i);
-        bezier(gAnd3.x, gAnd3.y, 
-          gAnd3.x+100, gAnd3.y-20, 
-          adders[bit].gXor1.x, flipFlops[bit].gAnd3.y-20, 
-          adders[bit].gXor1.x, flipFlops[bit].gAnd3.y-20);
+      //line(gAnd3.x, gAnd3.y, gAnd1.x, gAnd1.y);
+      bezier(gAnd3.x, gAnd3.y, 
+        gAnd3.x+50, gAnd3.y-10, 
+        gAnd1.x -50, gAnd1.y-10, 
+        gAnd1.x, gAnd1.y);
+      line(gAnd3.x, gAnd3.y, outBitX, outBitY);
+
+      if (flipFlops[bit].out == true) {
+        stroke(0, shadowLvl);
+
+        for (float i = 1.5; i<shadowSize; i++) {
+          strokeWeight(i);
+          bezier(gAnd3.x, gAnd3.y, 
+            gAnd3.x+100, gAnd3.y-20, 
+            adders[bit].gXor1.x, flipFlops[bit].gAnd3.y-20, 
+            adders[bit].gXor1.x, flipFlops[bit].gAnd3.y-20);
+
+          bezier(adders[bit].gXor1.x, gAnd3.y-20, 
+            adders[bit].gXor1.x, gAnd3.y-20, 
+            adders[bit].gXor1.x-50, adders[bit].gXor1.y-10, 
+            adders[bit].gXor1.x, adders[bit].gXor1.y);
+
+          bezier(adders[bit].gXor1.x, gAnd3.y-20, 
+            adders[bit].gXor1.x, gAnd3.y-20, 
+            adders[bit].gXor1.x-100, adders[bit].gXor1.y-15, 
+            gAnd1.x, gAnd1.y);
+        }
+
+        strokeWeight(1.5);
+        stroke(255);
+        bezier(flipFlops[bit].gAnd3.x, gAnd3.y, 
+          flipFlops[bit].gAnd3.x+100, gAnd3.y-20, 
+          adders[bit].gXor1.x, gAnd3.y-20, 
+          adders[bit].gXor1.x, gAnd3.y-20);
 
         bezier(adders[bit].gXor1.x, gAnd3.y-20, 
           adders[bit].gXor1.x, gAnd3.y-20, 
@@ -92,38 +110,20 @@ class flipFlop {
           adders[bit].gXor1.x-100, adders[bit].gXor1.y-15, 
           gAnd1.x, gAnd1.y);
       }
-
-      strokeWeight(1.5);
-      stroke(255);
-      bezier(flipFlops[bit].gAnd3.x, gAnd3.y, 
-        flipFlops[bit].gAnd3.x+100, gAnd3.y-20, 
-        adders[bit].gXor1.x, gAnd3.y-20, 
-        adders[bit].gXor1.x, gAnd3.y-20);
-
-      bezier(adders[bit].gXor1.x, gAnd3.y-20, 
-        adders[bit].gXor1.x, gAnd3.y-20, 
-        adders[bit].gXor1.x-50, adders[bit].gXor1.y-10, 
-        adders[bit].gXor1.x, adders[bit].gXor1.y);
-
-      bezier(adders[bit].gXor1.x, gAnd3.y-20, 
-        adders[bit].gXor1.x, gAnd3.y-20, 
-        adders[bit].gXor1.x-100, adders[bit].gXor1.y-15, 
-        gAnd1.x, gAnd1.y);
-    }
     }
     // gAnd4 to and3 and and2
     if (textOn) text("fand4 "+bit, gAnd4.x, gAnd4.y);
     if (gAnd4.out1 == true) {
       //line(gAnd4.x, gAnd4.y, gAnd3.x, gAnd3.y);
-      bezier(gAnd4.x, gAnd4.y,
-      gAnd4.x+40, gAnd4.y-10,
-      gAnd3.x-40, gAnd3.y+10,
-      gAnd3.x, gAnd3.y);
+      bezier(gAnd4.x, gAnd4.y, 
+        gAnd4.x+40, gAnd4.y-10, 
+        gAnd3.x-40, gAnd3.y+10, 
+        gAnd3.x, gAnd3.y);
       //line(gAnd4.x, gAnd4.y, gAnd2.x, gAnd2.y);
-      bezier(gAnd4.x, gAnd4.y,
-      gAnd4.x+50, gAnd4.y+10,
-      gAnd2.x-50, gAnd2.y+10,
-      gAnd2.x, gAnd2.y);
+      bezier(gAnd4.x, gAnd4.y, 
+        gAnd4.x+50, gAnd4.y+10, 
+        gAnd2.x-50, gAnd2.y+10, 
+        gAnd2.x, gAnd2.y);
     }
   }
   void calc(int bit) {

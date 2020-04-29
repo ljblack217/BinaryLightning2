@@ -14,11 +14,11 @@ class adder {
     out = false;
     posX = x;
     posY = y;
-    gXor1 = new xor(posX-40, posY-20);
-    gXor2 = new xor(posX+7, posY-20);
-    gAnd1 = new and(posX-40, posY+20, false);
+    gXor1 = new xor(posX-width/32, posY-height/36);
+    gXor2 = new xor(posX+width/183, posY-height/36);
+    gAnd1 = new and(posX-width/32, posY+height/36, false);
     gAnd2 = new and(posX, posY, false);
-    gOr1 = new or(posX+40, posY+20);
+    gOr1 = new or(posX+width/32, posY+height/36);
   }
   void drawAdder(float in1X, float in1Y, int bit) {
     textSize(12);
