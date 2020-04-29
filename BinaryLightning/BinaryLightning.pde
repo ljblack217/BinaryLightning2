@@ -1,4 +1,4 @@
-import beads.*;
+ import beads.*;
 import java.util.Arrays;
 import processing.net.*;
 
@@ -66,7 +66,7 @@ void setup() {
 
 void draw() {
   stroke(0);
-  fill(0, 40);
+  fill(0, 50);
   rect(0, 0, width, height);
   stroke(255);
   strokeWeight(1.5);

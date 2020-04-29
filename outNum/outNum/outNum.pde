@@ -5,7 +5,7 @@ PFont digit;
 
 void setup() {
   fullScreen();
-  c = new Client(this, "10.0.0.54", 12345);
+  c = new Client(this, "10.0.0.4", 12345);
   frameRate(50);
   digit = createFont("DS-DIGI.TTF",32);
   textFont(digit);
